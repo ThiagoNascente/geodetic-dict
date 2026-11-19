@@ -16,11 +16,11 @@ Gc = renomear_vertices(Gc)
 
 n = GGc.number_of_nodes()
 
-t = 14 # 15 nao tem
+t = 11 # 15 nao tem
 
 D = construir_dicionario_geodesico(GGc)
 
-S = encontrar_conjunto(D, n, t)
+S = encontrar_conjunto(D, n, t, False)
 
 print("Conjunto encontrado:", S)
 

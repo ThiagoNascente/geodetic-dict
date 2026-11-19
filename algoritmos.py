@@ -1,8 +1,4 @@
-import networkx as nx
-from itertools import combinations
-
-
-from itertools import combinations
+from libs import *
 
 def envoltoria_geodesica(S, D):
     H = set(S)

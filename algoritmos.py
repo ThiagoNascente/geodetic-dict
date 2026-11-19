@@ -38,7 +38,7 @@ def verificar_independencia_convexa(S, D):
     return True, None
 
 
-def encontrar_conjunto(D, n, t, mostrar=True):
+def encontrar_conjunto(D, n, t, mostrar=True, mostrar_solucao=True):
     if not 0 <= t <= n:
         raise ValueError("É necessário que 0 <= t <= n")
 
@@ -50,7 +50,7 @@ def encontrar_conjunto(D, n, t, mostrar=True):
 
         # Encontramos um conjunto de tamanho t
         if len(S) == t:
-            if mostrar:
+            if mostrar_solucao:
                 print(f"{espaco}SOLUÇÃO: {S}")
             return True
 

@@ -1,0 +1,46 @@
+# MAC e Linux
+
+Gere um ambiente virtual python
+
+```bash
+python3 -m venv venv
+```
+
+Ative o ambiente virtual
+
+```bash
+source .venv/bin/activate
+```
+
+Instale as libs, estando dentro da venv
+
+```bash
+pip install -r requirements.txt
+```
+
+*OBS.:* Talvez precise usar o seguinte para plotar os grafos 
+
+```bash
+sudo apt update
+sudo apt install python3-tk
+```
+
+# Windows
+
+Gere um ambiente virtual python
+
+```bash
+py -m venv venv
+```
+
+Ative o ambiente virtual
+
+```bash
+.\venv\Scripts\activate
+```
+
+Instale as libs, estando dentro da venv
+
+```bash
+pip install -r requirements.txt
+```

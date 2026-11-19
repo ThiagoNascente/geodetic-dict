@@ -1,5 +1,5 @@
-from itertools import combinations
-from algoritmos import *
+from libs import *
+
 n = 5
 t = 2
 
@@ -24,3 +24,5 @@ D[(2, 4)][3] = 1
 resultado = encontrar_conjunto(D, n, t)
 
 print("Resultado final:", resultado)
+
+

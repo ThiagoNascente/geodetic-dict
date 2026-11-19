@@ -22,3 +22,4 @@ D[(4, 5)][3] = 1
 resultado = encontrar_conjunto(D, n, t)
 
 print("Resultado final:", resultado)
+

@@ -1,29 +1,48 @@
 import networkx as nx
 from itertools import combinations
 
+
+from itertools import combinations
+
+def envoltoria_geodesica(S, D):
+    H = set(S)
+
+    # Pares que ainda precisam ser processados
+    pares = list(combinations(sorted(H), 2))
+
+    while pares:
+        a, b = pares.pop()
+
+        # Vértices pertencentes ao intervalo geodético
+        for c, valor in D[(a, b)].items():
+            if valor == 1 and c not in H:
+
+                # Novos pares formados com o vértice c
+                for v in H:
+                    pares.append(tuple(sorted((v, c))))
+
+                H.add(c)
+
+    return H
+
+
+def verificar_independencia_convexa(S, D):
+    for v in S:
+        restante = set(S) - {v}
+
+        H = envoltoria_geodesica(restante, D)
+
+        if v in H:
+            return False, v
+
+    return True, None
+
+
 def encontrar_conjunto(D, n, t, mostrar=True):
     if not 0 <= t <= n:
         raise ValueError("É necessário que 0 <= t <= n")
 
     S = []
-
-    def verificar(novo):
-        # Verifica os novos trios formados pela inclusão de 'novo'
-        for a, b in combinations(S, 2):
-            testes = [
-                ((a, b), novo),
-                ((a, novo), b),
-                ((b, novo), a)
-            ]
-
-            for par, c in testes:
-                par = tuple(sorted(par))
-                valor = D[par][c]
-
-                if valor == 1:
-                    return (par, c)
-
-        return None
 
     def buscar(inicio):
         nivel = len(S)
@@ -35,7 +54,7 @@ def encontrar_conjunto(D, n, t, mostrar=True):
                 print(f"{espaco}SOLUÇÃO: {S}")
             return True
 
-        # Não existem elementos suficientes para completar S
+        # Não há vértices suficientes para completar S
         if n - inicio < t - len(S):
             return False
 
@@ -43,28 +62,31 @@ def encontrar_conjunto(D, n, t, mostrar=True):
             if mostrar:
                 print(f"{espaco}Tentando adicionar {v} em {S}")
 
-            conflito = verificar(v)
+            candidato = S + [v]
 
-            if conflito is not None:
-                par, c = conflito
+            valido, conflito = verificar_independencia_convexa(
+                candidato, D
+            )
+
+            if not valido:
                 if mostrar:
                     print(
-                        f"{espaco}  Rejeitado: "
-                        f"D[{par}][{c}] = 1"
+                        f"{espaco}  Rejeitado: vértice {conflito} "
+                        f"pertence à envoltória dos demais"
                     )
                 continue
 
-            # Adiciona o elemento
+            # Adiciona o vértice
             S.append(v)
 
             if mostrar:
                 print(f"{espaco}  Adicionado: {S}")
 
-            # Continua buscando
+            # Continua a busca
             if buscar(v + 1):
                 return True
 
-            # Retrocede caso não encontre solução
+            # Retrocesso
             S.pop()
 
             if mostrar:
@@ -76,6 +98,7 @@ def encontrar_conjunto(D, n, t, mostrar=True):
         return S.copy()
 
     return None
+
 
 
 def renomear_vertices(G):
